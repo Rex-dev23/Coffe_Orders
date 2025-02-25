@@ -14,7 +14,7 @@
 ### 1. Клонирование проекта
 Склонируйте репозиторий или создайте проект локально:
 ```bash
-https://github.com/Rex-dev23/Coffee_orders-.git
+https://github.com/Rex-dev23/Coffe_Orders.git
 cd Coffee_orders-
 ```
 ### 2. Создание проекта в PyCharm
