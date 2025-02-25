@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Создать заказ</title>
+</head>
+<body>
+    <h1>Создать новый заказ</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <label>Номер стола:</label>
+        <input type="number" name="table_number" required><br>
+        <div id="items">
+            <div class="item">
+                <input type="text" name="items[]" placeholder="Название блюда" required>
+                <input type="number" step="0.01" name="prices[]" placeholder="Цена" required>
+                <input type="number" name="quantities[]" placeholder="Количество" value="1" required>
+            </div>
+        </div>
+        <button type="button" onclick="addItem()">Добавить блюдо</button><br>
+        <button type="submit">Создать заказ</button>
+    </form>
+    <a href="{% url 'order_list' %}">Назад</a>
+
+    <script>
+        function addItem() {
+            const container = document.getElementById('items');
+            const item = document.createElement('div');
+            item.innerHTML = `
+                <input type="text" name="items[]" placeholder="Название блюда" required>
+                <input type="number" step="0.01" name="prices[]" placeholder="Цена" required>
+                <input type="number" name="quantities[]" placeholder="Количество" value="1" required>
+            `;
+            container.appendChild(item);
+        }
+    </script>
+</body>
+</html>

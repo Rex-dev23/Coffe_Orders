@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список заказов</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Список заказов</h1>
+    <a href="{% url 'order_create' %}">Добавить заказ</a>
+    <form method="GET">
+        <input type="text" name="search" placeholder="Поиск по номеру стола или статусу">
+        <button type="submit">Найти</button>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Номер стола</th>
+            <th>Блюда</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.table_number }}</td>
+            <td>
+                {% for item in order.order_items.all %}
+                    {{ item.item_name }} ({{ item.quantity }} x {{ item.price }})<br>
+                {% endfor %}
+            </td>
+            <td>{{ order.total_price }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>
+                <a href="{% url 'order_update' order.pk %}">Изменить</a>
+                <form action="{% url 'order_delete' order.pk %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">Заказов нет</td></tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'revenue_report' %}">Посмотреть выручку</a>
+</body>
+</html>

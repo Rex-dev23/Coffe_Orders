@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Обновить заказ</title>
+</head>
+<body>
+    <h1>Обновить заказ #{{ order.id }}</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <label>Статус:</label>
+        <select name="status">
+            <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>В ожидании</option>
+            <option value="ready" {% if order.status == 'ready' %}selected{% endif %}>Готово</option>
+            <option value="paid" {% if order.status == 'paid' %}selected{% endif %}>Оплачено</option>
+        </select><br>
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{% url 'order_list' %}">Назад</a>
+</body>
+</html>
