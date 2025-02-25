@@ -15,7 +15,7 @@
 Склонируйте репозиторий или создайте проект локально:
 ```bash
 https://github.com/Rex-dev23/Coffe_Orders.git
-cd Coffee_orders-
+cd Coffe_Orders
 ```
 ### 2. Создание проекта в PyCharm
 Откройте PyCharm и выберите "Create New Project".
